@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./firebase.config";
+import MiddlewarePlugin from "vue-router-middleware-plugin";
+
+Vue.use(MiddlewarePlugin, { router, context: store });
 
 Vue.config.productionTip = false;
 
