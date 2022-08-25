@@ -3,6 +3,11 @@ module.exports = defineConfig({
   transpileDependencies: true,
   css: {
     loaderOptions: {
+      css: {
+        modules: {
+          auto: () => true,
+        },
+      },
       sass: {
         additionalData: `@import "~@/styles/main.sass"`,
       },
