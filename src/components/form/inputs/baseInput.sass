@@ -1,0 +1,39 @@
+.field
+  position: relative
+  display: flex
+  align-items: center
+  padding: 1.25em 0.75em
+  width: 100%
+  margin-bottom: 1.75em
+  border: 1px solid transparent
+  border-radius: 8px
+  box-shadow: 0px 1px 4px 2px rgba(34, 60, 80, 0.2)
+  background-color: $elements-bg
+  cursor: text
+  &_headline
+    display: none
+    position: absolute
+    top: 0
+    left: 1em
+    font-size: 0.75em
+    user-select: none
+    &__error
+      color: $error
+  &_errors
+    position: absolute
+    bottom: -1.25em
+    right: 0
+    color: $error
+    font-size: 0.875em
+  &_input
+    width: 100%
+    border: 0
+    outline: 0
+    color: $text-main
+    font-size: 1em
+    padding-right: calc(1em + 24px)
+    &__error::placeholder
+      opacity: 1
+      color: $error
+    &:focus::placeholder
+      opacity: 0
