@@ -1,14 +1,16 @@
 <template>
   <div :class="$style.register">
-    <BaseForm
+    <RegisterForm
       headline="Форма регистрации"
       :class="$style.register_form"
       @formAction="handleRegister"
-      >Регистрация</BaseForm
+      >Регистрация</RegisterForm
     >
-    <p v-show="errorMessage" :class="$style.register_error">
-      {{ errorMessage }}
-    </p>
+    <transition @before-enter="shakeStart" @enter="shakeActive">
+      <p v-show="errorMessage" :class="$style.register_error">
+        {{ errorMessage }}
+      </p>
+    </transition>
     <p :class="$style.register_text">
       Уже есть аккаунт?
       <router-link :to="{ name: 'login' }" :class="$style.register_link"
@@ -19,23 +21,23 @@
 </template>
 
 <script>
-import BaseForm from "../components/form/BaseForm.vue";
 import FirebaseAuth from "../firebase/firebase-auth";
+import formMixin from "@/components/mixins/formsMixin.js";
+import RegisterForm from "../components/forms/RegisterForm.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "RegisterView",
-  components: { BaseForm },
-
-  data() {
-    return {
-      errorMessage: "",
-    };
-  },
+  components: { RegisterForm },
+  mixins: [formMixin],
 
   methods: {
-    async handleRegister(email, password) {
+    ...mapActions(["changeUserName"]),
+
+    async handleRegister(email, password, name) {
       try {
-        await FirebaseAuth.createUser(email, password);
+        await FirebaseAuth.createUser(email, password, name);
+        this.changeUserName(name);
         this.$router.replace({ name: "home" });
       } catch (error) {
         this.errorMessage = error.message;
@@ -48,6 +50,7 @@ export default {
 <style lang="sass" module>
 .register
   min-height: 100vh
+  padding: 0 calc(20px - (100vw - 100%)) 0 0
   display: flex
   flex-direction: column
   justify-content: center
