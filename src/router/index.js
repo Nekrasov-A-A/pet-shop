@@ -18,11 +18,17 @@ export default new VueRouter({
       path: "/register",
       name: "register",
       component: () => import("../views/RegisterView.vue"),
+      meta: {
+        layout: "EmptyLayout",
+      },
     },
     {
       path: "/login",
       name: "login",
       component: () => import("../views/LoginView.vue"),
+      meta: {
+        layout: "EmptyLayout",
+      },
     },
     {
       path: "/personal-account",
@@ -55,6 +61,9 @@ export default new VueRouter({
       path: "*",
       name: "not-found",
       component: () => import("../views/NotFoundView.vue"),
+      meta: {
+        layout: "EmptyLayout",
+      },
     },
   ],
 });
