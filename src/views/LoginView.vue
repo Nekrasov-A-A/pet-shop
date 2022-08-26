@@ -1,37 +1,33 @@
 <template>
   <div :class="$style.loginPage">
-    <BaseForm
+    <LoginForm
       headline="Форма входа"
       :class="$style.loginPage_form"
       @formAction="handleLogin"
-      >Войти в систему</BaseForm
+      >Войти в систему</LoginForm
     >
+    <transition @before-enter="shakeStart" @enter="shakeActive">
+      <p v-if="errorMessage" :class="$style.loginPage_error">
+        {{ errorMessage }}
+      </p>
+    </transition>
     <p :class="$style.loginPage_text">
       Нет аккаунта?
       <router-link :to="{ name: 'register' }" :class="$style.loginPage_link"
         >Регистрация</router-link
       >
     </p>
-    <p v-if="errorMessage" :class="$style.loginPage_error">
-      {{ errorMessage }}
-    </p>
   </div>
 </template>
 
 <script>
-import BaseForm from "../components/form/BaseForm.vue";
 import FirebaseAuth from "../firebase/firebase-auth";
-
+import formsMixin from "@/components/mixins/formsMixin.js";
+import LoginForm from "../components/forms/LoginForm.vue";
 export default {
   name: "LoginView",
-  components: { BaseForm },
-
-  data() {
-    return {
-      errorMessage: "",
-    };
-  },
-
+  components: { LoginForm },
+  mixins: [formsMixin],
   methods: {
     async handleLogin(email, password) {
       try {
@@ -47,6 +43,7 @@ export default {
 <style lang="sass" module>
 .loginPage
   min-height: 100vh
+  padding: 0 calc(20px - (100vw - 100%)) 0 0
   display: flex
   flex-direction: column
   justify-content: center
