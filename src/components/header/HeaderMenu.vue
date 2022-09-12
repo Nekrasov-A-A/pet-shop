@@ -85,15 +85,15 @@ export default {
 
 <style lang="sass" module>
 .icon
-  width: 28px
-  height: 28px
+  width: 32px
+  height: 32px
   display: flex
   flex-direction: column
   justify-content: space-between
   align-items: center
   cursor: pointer
   border: 0
-  padding: 0
+  padding: 4px
   background-color: transparent
   &:hover .line
     background-color: $icon-hover
@@ -155,9 +155,9 @@ export default {
   background-color: transparent
   cursor: pointer
   transition: all .3s
-  &:hover
+  &:hover, &:focus
     border-color:  $icon-hover
-  &:hover .cross
+  &:hover .cross,  &:focus .cross
     background-color: $icon-hover
 .cross
   position: absolute
