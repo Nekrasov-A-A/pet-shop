@@ -1,0 +1,34 @@
+.container
+  display: flex
+  width: 60%
+  justify-content: flex-end
+  @media screen and (max-width: $xl)
+    width: 70%
+  @media screen and (max-width: $lg)
+    width: 80%
+  @media screen and (max-width: $sm)
+    width: 100%
+    height: 100%
+    padding-bottom: 10%
+    justify-content: center
+    align-items: flex-end
+    background-color: rgba(0,0,0,.2)
+.paragraphWrapper
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  gap: 16px
+.link
+  padding: 12px 24px
+  min-width: 158px
+  border-radius: 12px
+  background-color: $slider-text-special-color
+  font-size: 1.5rem
+  text-decoration: none
+  color: $slider-text-link-color
+  transition: all .3s
+  text-align: center
+  outline: none
+  &:hover
+    background-color: darken( $slider-text-special-color, 20%)
