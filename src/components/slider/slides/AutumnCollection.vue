@@ -18,16 +18,10 @@
 </template>
 
 <script>
-import BaseSlide from "../BaseSlide.vue";
-import baseSlide from "../base/baseSlide.module.sass";
+import baseSlideMixin from "../../mixins/slides/baseSlideMixin";
 export default {
   name: "AutumnCollection",
-  components: { BaseSlide },
-  data() {
-    return {
-      baseSlide,
-    };
-  },
+  mixins: [baseSlideMixin],
 };
 </script>
 
@@ -42,14 +36,14 @@ export default {
     gap: 16px
 .container
   display: flex
-  width: 90%
+  width: 100%
+  height: 100%
+  align-items: flex-end
   justify-content: flex-start
-  @media screen and (max-width: $xl)
-    width: 100%
-    height: 100%
-    align-items: flex-end
-    justify-content: center
+  padding-bottom: 2rem
+  padding-left: 2rem
   @media screen and (max-width: $sm)
+    justify-content: center
     padding-bottom: 10%
     background-color: rgba(0,0,0,.2)
 </style>

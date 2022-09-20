@@ -1,7 +1,7 @@
 .container
   display: flex
+  justify-content: center
   width: 60%
-  justify-content: flex-end
   @media screen and (max-width: $xl)
     width: 70%
   @media screen and (max-width: $lg)
@@ -13,6 +13,14 @@
     justify-content: center
     align-items: flex-end
     background-color: rgba(0,0,0,.2)
+  &__right
+    justify-content: flex-end
+    @media screen and (max-width: $sm)
+      justify-content: center
+  &__left
+    justify-content: flex-start
+    @media screen and (max-width: $sm)
+      justify-content: center
 .paragraphWrapper
   display: flex
   flex-direction: column
@@ -30,5 +38,7 @@
   transition: all .3s
   text-align: center
   outline: none
+  &:focus 
+    outline: 2px dashed blue
   &:hover
     background-color: darken( $slider-text-special-color, 20%)

@@ -1,5 +1,5 @@
 <template>
-  <section :class="baseSlide.container">
+  <section :class="[[baseSlide.container], [baseSlide.container__right]]">
     <BaseSlide>
       <template #headline>-10%</template>
       <template #paragraph>
@@ -8,8 +8,8 @@
         </div>
       </template>
       <template #link>
-        <router-link to="/catalog/men" :class="baseSlide.link">
-          Для него
+        <router-link to="/catalog/women" :class="baseSlide.link">
+          Для неё
         </router-link>
       </template>
     </BaseSlide>
@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import baseSlideMixin from "../../../mixins/slides/baseSlideMixin";
+import baseSlideMixin from "../../mixins/slides/baseSlideMixin";
 export default {
-  name: "SlideMen",
+  name: "SlideWomen",
   mixins: [baseSlideMixin],
 };
 </script>

@@ -6,7 +6,7 @@
     <div :class="$style.paragraph" :style="{ color: paragraphColor }">
       <slot name="paragraph"></slot>
     </div>
-    <div :class="$style.linkWrapper">
+    <div :class="$style.linkWrapper" class="swiper-no-swiping">
       <slot name="link"></slot>
     </div>
   </div>
