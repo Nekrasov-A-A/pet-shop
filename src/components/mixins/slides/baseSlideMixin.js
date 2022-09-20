@@ -1,4 +1,4 @@
-import baseSlide from "../../slider/slides/base/baseSlide.module.sass";
+import baseSlide from "../../slider/slides/baseSlide.module.sass";
 import BaseSlide from "../../slider/slides/BaseSlide.vue";
 const baseSliderMixin = {
   components: { BaseSlide },
