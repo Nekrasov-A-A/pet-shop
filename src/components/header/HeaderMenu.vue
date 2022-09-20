@@ -38,6 +38,13 @@ export default {
       isShow: false,
     };
   },
+  watch: {
+    $route(to, from) {
+      if (this.isShow) {
+        if (to.path !== from.path) this.closeMenu("menu");
+      }
+    },
+  },
 
   methods: {
     openMenu() {
@@ -113,9 +120,8 @@ export default {
   overflow: hidden
   z-index: 10
   inset: 0
-  background-color: $open-menu-bg
+  background-color: transparent
 .itemList
-  --width-value: 280px
   width: var(--width-value)
   height: 100vh
   display: flex
@@ -128,7 +134,6 @@ export default {
   height: 100%
   overflow-y: auto
   overflow-x: hidden
-  margin-right: calc(-1 * (var(--width-value) - 100%))
   scrollbar-color: $scrollbar-color $scrollbar-bg
   scrollbar-width: thin
   &::-webkit-scrollbar
@@ -155,6 +160,7 @@ export default {
   background-color: transparent
   cursor: pointer
   transition: all .3s
+  z-index: 15
   &:hover, &:focus
     border-color:  $icon-hover
   &:hover .cross,  &:focus .cross
