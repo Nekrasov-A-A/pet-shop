@@ -1,43 +1,20 @@
 <template>
   <div id="app">
-    <component :is="currentLayout">
-      <transition mode="out-in" @enter="fadeIn" @leave="fadeOut">
+    <Component :is="this.$route.meta.layoutComponent">
+      <transition @enter="fadeIn" @leave="fadeOut">
         <router-view />
       </transition>
-    </component>
+    </Component>
   </div>
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { mapActions, mapGetters } from "vuex";
-import DefaultLayout from "./views/layouts/DefaultLayout.vue";
-import EmptyLayout from "./views/layouts/EmptyLayout.vue";
 import gsap from "gsap";
-
 export default {
-  components: { DefaultLayout, EmptyLayout },
-
-  data() {
-    return {
-      currentLayout: "DefaultLayout",
-    };
-  },
-
   computed: {
     ...mapGetters(["isLoggedIn"]),
-    someshit() {
-      return getAuth().currentUser;
-    },
-  },
-
-  watch: {
-    $route: {
-      immediate: true,
-      handler(route) {
-        this.currentLayout = route.meta.layout || "DefaultLayout";
-      },
-    },
   },
 
   created() {
@@ -66,10 +43,10 @@ export default {
     },
 
     fadeOut(el) {
-      gsap.fromTo(el, { y: 0 }, { y: "100%" });
+      gsap.fromTo(el, { opacity: 0 }, { opacity: 0 });
     },
     fadeIn(el) {
-      gsap.fromTo(el, { y: "100%" }, { y: 0 });
+      gsap.fromTo(el, { x: "100%" }, { x: 0 });
     },
   },
 };
