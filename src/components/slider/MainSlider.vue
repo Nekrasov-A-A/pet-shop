@@ -8,13 +8,20 @@
     <SwiperSlide
       :class="$style.slide"
       v-for="(item, index) in imagesData"
-      :key="item + index"
+      :key="item.componentName + index"
     >
       <div
-        :class="$style.slideInner"
+        :class="[
+          [$style.slideInner],
+          {
+            [$style.slideInner__left]: item.imageSide === 'left',
+            [$style.slideInner__right]: item.imageSide === 'right',
+            [$style.slideInner__center]: item.imageSide === 'center',
+          },
+        ]"
         :style="{ backgroundImage: `url(${item.imagePath})` }"
       >
-        <Component :is="item.componentName" />
+        <Component :is="item.slideComponent" />
       </div>
     </SwiperSlide>
     <div
@@ -27,18 +34,14 @@
 
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import SlideMen from "./slides/SlideMen.vue";
-import SlideCollection from "./slides/SlideCollection.vue";
-import SlideWomen from "./slides/SlideWomen.vue";
+
 import "swiper/css/swiper.css";
+
 export default {
   name: "MainSlider",
   components: {
     Swiper,
     SwiperSlide,
-    SlideMen,
-    SlideCollection,
-    SlideWomen,
   },
 
   data() {
@@ -46,10 +49,8 @@ export default {
       imagesData: [],
       swiperOptions: {
         direction: "vertical",
-        initialSlide: 2,
         spaceBetween: 0,
         slidesPerView: 1,
-        loop: true,
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
@@ -62,21 +63,28 @@ export default {
       },
     };
   },
-  mounted() {
+  created() {
     let images = require.context("../../assets/images/slider", true, /\.jpg$/);
     this.importAll(images);
   },
   methods: {
     importAll(images) {
-      images.keys().forEach((key) => {
+      images.keys().forEach(async (key) => {
         let componentName = this.getComponentName(key);
+        let component = await this.importComponent(componentName);
+        let imageSide = this.getImageSide(key);
         let imageData = {
           imagePath: images(key),
+          slideComponent: component,
+          imageSide,
           componentName,
         };
-
         this.imagesData.push(imageData);
       });
+    },
+    getImageSide(key) {
+      let value = key.split("-");
+      return this.removeImageType(value[3]) || "center";
     },
     getComponentName(key) {
       let value = key.split("-");
@@ -85,11 +93,15 @@ export default {
         this.firstLetterToUpperCase(this.removeImageType(value[2]));
       return name;
     },
+    async importComponent(componentName) {
+      let component = await import(`./slides/${componentName}.vue`);
+      return component.default;
+    },
     firstLetterToUpperCase(string) {
       return string.slice(0, 1).toUpperCase() + string.slice(1);
     },
     removeImageType(string) {
-      return string.replace(/[.jpg]/gi, "");
+      return string.replace(/.jpg/gi, "");
     },
   },
 };
@@ -112,6 +124,23 @@ export default {
   display: flex
   align-items: center
   justify-content: center
+  background-repeat: no-repeat
+  background-size: cover
+  &__left
+    background-position: center left
+    @media screen and (max-width: $xl)
+      background-position: center 10%
+    @media screen and (max-width: $sm)
+      background-position: 30% 0
+  &__right
+    background-position: center right
+    @media screen and (max-width: $xl)
+      background-position: center right 10%
+    @media screen and (max-width: $sm)
+      background-position: center right 30%
+  &__center
+    background-position: center center
+
 .pagination
   display: flex
   flex-direction: column
