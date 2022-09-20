@@ -47,7 +47,19 @@ export default new VueRouter({
       component: () => import("../views/CatalogView.vue"),
     },
     {
-      path: "/catalog/:category",
+      path: "/catalog/:section",
+      name: "section",
+      props: true,
+      component: () => import("../views/CategoryView.vue"),
+    },
+    {
+      path: "/catalog/:section/:subsection",
+      name: "subsection",
+      props: true,
+      component: () => import("../views/CategoryView.vue"),
+    },
+    {
+      path: "/catalog/:section/:subsection/:category",
       name: "category",
       props: true,
       component: () => import("../views/CategoryView.vue"),
