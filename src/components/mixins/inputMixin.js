@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { ValidationProvider } from "vee-validate";
-import baseInput from "@/components/forms/inputs/baseInput.sass";
+import baseInput from "@/components/forms/inputs/baseInput.module.sass";
 
 const inputMixin = {
   components: { ValidationProvider },
